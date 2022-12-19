@@ -1,10 +1,9 @@
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.io.IOException;
-import java.util.Date;
-import java.text.SimpleDateFormat;
-import java.lang.String;
 import java.util.Calendar;
+import java.util.Date;
+import java.io.IOException;
+import java.util.Scanner;
+import java.text.SimpleDateFormat;
 
 public class projectbioskop {
 
@@ -28,9 +27,10 @@ public class projectbioskop {
             System.out.println("[4] Lihat Detail Film");
             System.out.println("[5] Beli Tiket Bioskop");
             System.out.println("[6] Konfirmasi Pembayaran Tiket");
-            System.out.println("[7] Lihat Daftar Tiket");
-            System.out.println("[8] Lihat Detail Tiket");
-            System.out.println("[9] Exit" + RESET);
+            System.out.println("[7] Batalkan Pembelian Tiket");
+            System.out.println("[8] Lihat Daftar Tiket");
+            System.out.println("[9] Lihat Detail Tiket");
+            System.out.println("[0] Exit" + RESET);
             System.out.print("PILIH MENU> " );
             String pilihMenu = data.nextLine();
             switch(pilihMenu){
@@ -53,12 +53,15 @@ public class projectbioskop {
                     konfirmasiBayar();
                     break;
                 case "7":
-                    lihatDaftarTiket();
+                    batalTiket();
                     break;
                 case "8":
-                    lihatDetailTiket();
+                    lihatDaftarTiket();
                     break;
                 case "9":
+                    lihatDetailTiket();
+                    break;
+                case "0":
                     System.out.print(GREEN + "Terimakasih telah menggunakan program ini" + RESET);
                     System.exit(0);
                 default:
@@ -107,7 +110,7 @@ public class projectbioskop {
             System.out.println(GREEN + "Menambah Daftar Film Berhasil!" + RESET);
         }
             else{
-            System.out.println(RED +"Menambah Daftar Film Gagal!" + RESET);
+            System.out.println(RED + "Menambah Daftar Film Gagal!" + RESET);
             }
         System.out.print("Apakah ingin menambah film lagi? (y/n) ");
         ulang = data.nextLine();
@@ -117,7 +120,7 @@ public class projectbioskop {
     }
 
     public static void hapusFilmBioskop(){
-        if(daftarFilm.size()!=0){
+        if(daftarFilm.isEmpty()==false){
         int size = daftarFilm.size();
         System.out.println(ORANGE +"======= HAPUS FILM BIOSKOP =======" + RESET);
         for(int i=0; i<daftarFilm.size();i++){
@@ -141,7 +144,7 @@ public class projectbioskop {
     }
 
     public static void lihatFilmBioskop(){
-        if(daftarFilm.size()!=0){
+        if(daftarFilm.isEmpty()==false){
             System.out.println(ORANGE + "============= SEDANG TAYANG =============");
             for(int i=0; i<daftarFilm.size();i++){
             System.out.println("["+(i+1)+"] "+daftarFilm.get(i));
@@ -155,7 +158,7 @@ public class projectbioskop {
     }
 
     public static void lihatDetailFilm(){
-        if(daftarFilm.size()!=0){
+        if(daftarFilm.isEmpty()==false){
             System.out.println(ORANGE +"=============== DAFTAR FILM ===============");
             for(int i=0; i<daftarFilm.size();i++){
             System.out.println("["+(i+1)+"] "+daftarFilm.get(i));
@@ -180,10 +183,10 @@ public class projectbioskop {
         String nama = data.nextLine();
         System.out.println(ORANGE + "----------------------------------");
         System.out.println(">> Pilih Jadwal Tayang");
-        System.out.println("[1] "+ getTanggal(0));
-        System.out.println("[2] "+ getTanggal(1));
-        System.out.println("[3] "+ getTanggal(2));
-        System.out.println("[4] "+ getTanggal(3));
+        System.out.println("[1] " + getTanggal(0));
+        System.out.println("[2] " + getTanggal(1));
+        System.out.println("[3] " + getTanggal(2));
+        System.out.println("[4] " + getTanggal(3));
         System.out.print(RESET + "PILIH Jadwal Tayang> ");
         int pilihTanggal = Integer.parseInt(data.nextLine());
         System.out.println(ORANGE + "----------------------------------");
@@ -209,6 +212,11 @@ public class projectbioskop {
         System.out.println("[4] Ultra");
         System.out.print(RESET + "PILIH JENIS TIKET> ");
         int pilihJenisTiket = Integer.parseInt(data.nextLine());
+        System.out.println(ORANGE + "----------------------------------" + YELLOW);
+        tampilKursi(pilihJenisTiket);
+        System.out.println(RED + "Contoh Penulisan No Kursi : A2" + RESET);
+        System.out.print(RESET + "PILIH NO KURSI> ");
+        String pilihNoKursi = data.nextLine();
         System.out.println(ORANGE + "----------------------------------");
         System.out.println(">> Pilih Metode Pembayaran");
         System.out.println("[1] Transfer Bank");
@@ -218,21 +226,22 @@ public class projectbioskop {
         System.out.println("[5] LinkAja");
         System.out.print(RESET + "PILIH JENIS TIKET> ");
         int pilihPembayaran = Integer.parseInt(data.nextLine());
-        beliTiketBioskop(nama, pilihTanggal, pilihFilm, pilihJamTayang, pilihJenisTiket, pilihPembayaran);
+        beliTiketBioskop(nama, pilihTanggal, pilihFilm, pilihJamTayang, pilihJenisTiket, pilihNoKursi, pilihPembayaran);
     }
 
-    public static void beliTiketBioskop(String nama, int pilihTanggal, int pilihFilm, int pilihJamTayang, int pilihJenisTiket, int pilihPembayaran){
+    public static void beliTiketBioskop(String nama, int pilihTanggal, int pilihFilm, int pilihJamTayang, int pilihJenisTiket, String pilihNoKursi,int pilihPembayaran){
         String tanggal = getTanggal((pilihTanggal-1));
         String film=daftarFilm.get((pilihFilm-1));
         String jam=jamTayang[(pilihJamTayang-1)];
         String jenis=jenisTiket[(pilihJenisTiket-1)];
+        String theater = Integer.toString(pilihJenisTiket);
         String pembayaran = metodePembayaran[(pilihPembayaran-1)];
         int ctiket=tiketBioskop.size()+1;
         String tiket=String.valueOf(ctiket);
         String noTiket= membuatKodeTiket(tiket);
         String totalBayar = hargaTiket[(pilihJenisTiket-1)];
         String statusBayar = "Pending";
-        String IDtiket = noTiket + " ; " + nama + " ; " + film + " ; " + tanggal + " ; " + jam + " ; " + jenis + " ; " + pembayaran + " ; " + totalBayar + " ; " + statusBayar;
+        String IDtiket = noTiket + " ; " + nama + " ; " + film + " ; " + tanggal + " ; " + jam + " ; " + jenis + " ; " + theater + " ; " + pilihNoKursi + " ; " + pembayaran + " ; " + totalBayar + " ; " + statusBayar;
         tiketBioskop.add(IDtiket);
         System.out.println(GREEN + "=========== DATA TIKET ===========");
         System.out.println("No Tiket          : " + noTiket);
@@ -241,6 +250,8 @@ public class projectbioskop {
         System.out.println("Hari, Tanggal     : " + tanggal );
         System.out.println("Jam Tayang        : " + jam + " WIB");
         System.out.println("Jenis Tiket       : " + jenis);
+        System.out.println("Theater           : " + theater);
+        System.out.println("No Kursi          : " + pilihNoKursi);
         System.out.println("Metode Pembayaran : " + pembayaran);
         System.out.println("==================================");
         System.out.println("Total Harga       : Rp." + totalBayar);
@@ -265,14 +276,10 @@ public class projectbioskop {
     }
 
     public static void konfirmasiBayar(){
-        if(tiketBioskop.size()!=0){
+        if(tiketBioskop.isEmpty()==false){
             System.out.println(ORANGE + "======== DAFTAR TIKET ========");
             for(int i=0; i<tiketBioskop.size();i++){
                 System.out.println("["+(i+1)+"] "+tiketBioskop.get(i));
-                }
-            }
-            else{
-                tiketKosong();
                 }
         System.out.print(RESET + "PILIH NO TIKET> ");
         int noTiket = Integer.parseInt(data.nextLine());
@@ -283,17 +290,46 @@ public class projectbioskop {
         String konfirmasi = data.nextLine();
         if (konfirmasi.contains("y") || konfirmasi.contains("Y")){
             String statusBayar = "Sudah Bayar";
-            tiketBioskop.set((noTiket-1), detailTiket[0] + " ; " + detailTiket[1] + " ; " + detailTiket[2] + " ; " + detailTiket[3] + " ; " + detailTiket[4] + " ; " + detailTiket[5] + " ; " + detailTiket[6]  + " ; " + detailTiket[7]  + " ; " + statusBayar );
+            tiketBioskop.set((noTiket-1), detailTiket[0] + " ; " + detailTiket[1] + " ; " + detailTiket[2] + " ; " + detailTiket[3] + " ; " + detailTiket[4] + " ; " + detailTiket[5] + " ; " + detailTiket[6]  + " ; " + detailTiket[7] + " ; " + detailTiket[8] + " ; " + detailTiket[9] + " ; " + statusBayar );
             System.out.println(GREEN + "Pembayaran Tiket No." + detailTiket[0] + " Berhasil Dikonfirmasi" + RESET);
         }
             else{
                 System.out.println(RED + "Pembayaran Tiket No." + detailTiket[0] + " Gagal Dikonfirmasi" + RESET);
             }
+        }
+            else{
+                tiketKosong();
+                }
         enter();
     }
 
+    public static void batalTiket(){
+        if(tiketBioskop.isEmpty()==false){
+            System.out.println(ORANGE +"======= BATALKAN PEMBELIAN TIKET BIOSKOP =======" + RESET);
+            for(int i=0; i<tiketBioskop.size();i++){
+                System.out.println("["+(i+1)+"] "+tiketBioskop.get(i));
+            }
+            System.out.print("Masukkan nomor tiket yang ingin dibatalkan : ");
+            int nomor = Integer.parseInt(data.nextLine());
+            tampilTiket(nomor);
+            System.out.print("Apakah Kamu Ingin Membatalkan Pembelian Tiket Tersebut? (y/n) ");
+            String konfirmasi = data.nextLine();
+            if (konfirmasi.contains("y") || konfirmasi.contains("Y")){
+                tiketBioskop.remove((nomor-1));
+                System.out.println(GREEN + "Pembelian Tiket Berhasil Dibatalkan!" + RESET);
+            }
+                else{
+                    System.out.println(RED + "Pembelian Tiket Tidak Berhasil Dibatalkan!" + RESET);
+                }
+            }
+                else{
+                    tiketKosong();
+                }
+            enter();
+    }
+
     public static void lihatDaftarTiket(){
-        if(tiketBioskop.size()!=0){
+        if(tiketBioskop.isEmpty()==false){
         System.out.println(ORANGE + "============ DAFTAR TIKET ============");
         for(int i=0; i<tiketBioskop.size();i++){
             System.out.println("["+(i+1)+"] "+tiketBioskop.get(i));
@@ -307,7 +343,7 @@ public class projectbioskop {
     }
 
     public static void lihatDetailTiket(){
-        if(tiketBioskop.size()!=0){
+        if(tiketBioskop.isEmpty()==false){
         System.out.println(ORANGE + "======== LIHAT DETAIL TIKET ========");
         for(int i=0; i<tiketBioskop.size();i++){
         System.out.println("["+(i+1)+"] "+tiketBioskop.get(i));
@@ -324,6 +360,10 @@ public class projectbioskop {
     }
 
     public static void tampilTiket(int pilihTiket){
+        if(tiketBioskop.size() < pilihTiket){
+            System.out.println(RED + "Masukkan No Tiket Dengan Benar!" + RESET);
+        }
+        else{
         String tiket = (String)tiketBioskop.get((pilihTiket-1));
         String [] detailTiket = tiket.split(" ; ");
         System.out.println(LBLUE + "--------- DETAIL TIKET [" + (pilihTiket) + "] ---------");
@@ -333,16 +373,19 @@ public class projectbioskop {
         System.out.println("Hari, Tanggal       : " + detailTiket[3]);
         System.out.println("Jam Tayang          : " + detailTiket[4]);
         System.out.println("Jenis Tiket         : " + detailTiket[5]);
-        System.out.println("Metode Pembayaran   : " + detailTiket[6]);
-        System.out.println("Harga               : " + detailTiket[7]);
+        System.out.println("Theater             : " + detailTiket[6]);
+        System.out.println("No Kursi            : " + detailTiket[7]);
+        System.out.println("Metode Pembayaran   : " + detailTiket[8]);
+        System.out.println("Harga               : Rp." + detailTiket[9]);
         System.out.print("Status Bayar        : ");
-        if (detailTiket[8].contains("Sudah Bayar")){
-            System.out.println(GREEN + detailTiket[8]);
+        if (detailTiket[10].contains("Sudah Bayar")){
+            System.out.println(GREEN + detailTiket[10]);
         }
             else {
-                System.out.println(RED + detailTiket[8]);
+                System.out.println(RED + detailTiket[10]);
             }
         System.out.println(LBLUE + "------------------------------------" + RESET);
+        }
     }
 
     public static String membuatKodeTiket(String noTiket){
@@ -364,9 +407,37 @@ public class projectbioskop {
         return noTiket;
     }
 
+    public static void tampilKursi(int pilihTiket){
+        int baris,kolom;
+        int [] jumlahBaris = {15,10,6,4};
+        int [] jumlahKolom = {18,12,8,6};
+        int [] jmlPagar = {12,9,6,6};
+        String [] spasi = {" ","  ","   ","     "};
+        baris=jumlahBaris[(pilihTiket-1)];
+        kolom=jumlahKolom[(pilihTiket-1)];
+        // Menampilkan nomor kursi
+        for (int x = 0; x < baris; x++) {
+            char rowLabel = (char)('A' + x);
+        for (int y = 0; y < kolom; y++) {
+        System.out.print(rowLabel + "" + (y + 1) + spasi[pilihTiket-1]);
+        }
+        System.out.println();
+        }
+        //Menampilkan Layar Bioskop
+        int pagar=jmlPagar[(pilihTiket-1)];String pager="";
+        for (int i = 0; i < pagar; i++) {
+            pager += "#";
+            }
+        for (int i = 0; i < pagar; i++) {
+            pager += "#";
+            }
+        System.out.println(green + pager + " LAYAR BIOSKOP " + pager);
+    }
+
     //Warna Teks
     static String RESET = "\033[0;97m";
     static String GREEN = "\033[1;92m";
+    static String green = "\033[32m";
     static String YELLOW = "\033[1;33m";
     static String RED = "\033[1;91m";
     static String ORANGE = "\033[38;2;225;153;0m";
