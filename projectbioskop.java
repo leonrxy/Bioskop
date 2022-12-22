@@ -376,7 +376,7 @@ public class projectbioskop {
         else{
         String tiket = (String)tiketBioskop.get((pilihTiket-1));
         String [] detailTiket = tiket.split(" ; ");
-        System.out.println(LBLUE + "--------- DETAIL TIKET [" + (pilihTiket) + "] ---------");
+        System.out.println(LBLUE + "══════════════ DETAIL TIKET [" + (pilihTiket) + "] ══════════════");
         System.out.println("No Tiket            : " + detailTiket[0]);
         System.out.println("Nama                : " + detailTiket[1]);
         System.out.println("Film                : " + detailTiket[2]);
@@ -394,7 +394,7 @@ public class projectbioskop {
             else {
                 System.out.println(RED + detailTiket[10]);
             }
-        System.out.println(LBLUE + "------------------------------------" + RESET);
+        System.out.println(LBLUE + "══════════════════════════════════════════════" + RESET);
         }
     }
 
@@ -435,9 +435,6 @@ public class projectbioskop {
         }
         //Menampilkan Layar Bioskop
         int pagar=jmlPagar[(pilihTiket-1)];String pager="";
-        for (int i = 0; i < pagar; i++) {
-            pager += "#";
-            }
         for (int i = 0; i < pagar; i++) {
             pager += "#";
             }
