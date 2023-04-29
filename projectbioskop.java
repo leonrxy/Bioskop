@@ -80,7 +80,7 @@ public class projectbioskop {
         System.out.println("║ 88~~~b.    88    88    88   `Y8b. 88`8b   88    88 88~~~     .d~~~b. d8888b. ║");
         System.out.println("║ 88   8D   .88.   `8b  d8' db   8D 88 `88. `8b  d8' 88        88   8D 88' `8D ║");
         System.out.println("║ Y8888P' Y888888P  `Y88P'  `8888Y' YP   YD  `Y88P'  88        `Y888P' `8888P  ║");
-        System.out.println("╚════════════════════════════════╣ Kelompok 1 ╠════════════════════════════════╝" + RESET);
+        System.out.println("╚═════════════════════════════════╣ leonrxy ╠══════════════════════════════════╝" + RESET);
     }
 
     public static void enter(){
